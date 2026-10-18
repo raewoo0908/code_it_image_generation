@@ -1,3 +1,40 @@
+# 환경 설정
+이 프로젝트의 환경은 uv로 관리됩니다. 
+
+1. uv 설치(최초 1회)
+    - macOS / Linux
+        ```bash
+        curl -LsSf https://astral.sh/uv/install.sh | sh          # macOS / Linux
+        ```
+    - Windows PowerShell
+        ```powershell
+        powershell ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+        ```
+
+2. uv 설치 확인
+    ```bash
+    uv --version
+    ```
+
+3. 레포를 받은 뒤 환경 생성
+    ```bash
+    git pull origin main
+    rm -rf .venv        # 기존 .venv(예: 3.14)가 있다면 삭제
+    uv sync             # Python 3.12가 없으면 uv가 자동으로 받아서 설치함  
+    ```
+
+4. 의존성 추가 시
+    ```bash
+    uv add <패키지>
+    ```
+    | **NOTE**: `pip install`로 설치하지 않습니다. `uv.lock`에 기록되지 않아 다른 팀원 간 환경에 drfit 발생함. 
+
+5. 팀 규칙
+    1. `pyproject.toml`과 `uv.lock`은 항상 같이 커밋합니다.
+    2. main을 pull한 뒤에는 uv sync를 실행합니다. 다른 팀원이 추가한 패키지가 반영됩니다.
+    3. uv.lock에서 머지 충돌이 나면 직접 고치지 않습니다. pyproject.toml의 충돌만 해결한 뒤 `uv lock`으로 lock 파일을 다시 만듭니다.
+    4. 스크립트는 `uv run python src/train.py`처럼 실행합니다. 가상환경을 따로 켤 필요가 없습니다.
+
 # 미션 소개
 
 이번 미션에서는  모델을 활용하여 FashionMNIST 데이터셋의 각 패션 아이템(예: 티셔츠, 바지, 스니커즈 등)을 조건부로 생성하는 작업을 수행합니다. 각 클래스에 해당하는 이미지를 생성하는 cGAN (Conditional GAN) 모델을 직접 설계하고 학습시켜 보세요.
@@ -57,8 +94,9 @@
 
 | 목적 | 이름 규칙 | 
 | -- | -- | 
-| EDA | eda/{your name}
-| 모델링 및 실험 | exp/{실험 목적을 나타내는 소개}
+| EDA | eda/{your name} | 
+| 모델링 및 실험 | exp/{실험 목적을 나타내는 소개} | 
+| 잡업(환경설정, README 수정 등) | chore/{브랜치 목적을 나타내는 소개} |
 
 ## commit convention
 - 일정 작업 단위가 완성되면 커밋을 진행합니다.
@@ -75,6 +113,7 @@
     | -- | -- | -- |
     | code | 코드 작업 | .py, .ipynb 작업. <br>eda 코드 작성, 수정, 모델링/실험 코드 작성, 수정</br> | 
     | docs | 문서 작업 | READEME.md, CLAUDE.md, AGENTS.md 등 코드파일이 아닌 파일을 생성 및 수정 |
+    | chore | 설정 작업 | 환경변수 추가, 가상환경에 패키지 추가 등 환경설정 작업 |
 
     > 이번 미션에서는 너무 세부적인 커밋 타입을 지정하지는 않고, 커밋 메시지 작성에 익숙해지는 것을 목적으로 아래 두 작업유형(type)만 지정했습니다. 추후 추가가 필요하면 여기에 추가하면 됩니다.
 
