@@ -21,6 +21,7 @@
     git pull origin main
     rm -rf .venv        # 기존 .venv(예: 3.14)가 있다면 삭제
     uv sync             # Python 3.12가 없으면 uv가 자동으로 받아서 설치함  
+    uv run pre-commit install   # 최초 1회: 커밋 전 uv.lock 검사 hook 설치
     ```
 
 4. 의존성 추가 시
@@ -34,6 +35,8 @@
     2. main을 pull한 뒤에는 uv sync를 실행합니다. 다른 팀원이 추가한 패키지가 반영됩니다.
     3. uv.lock에서 머지 충돌이 나면 직접 고치지 않습니다. pyproject.toml의 충돌만 해결한 뒤 `uv lock`으로 lock 파일을 다시 만듭니다.
     4. 스크립트는 `uv run python src/train.py`처럼 실행합니다. 가상환경을 따로 켤 필요가 없습니다.
+    5. `pyproject.toml`이나 `uv.lock`을 커밋하면 pre-commit hook이 `uv lock --check`로 두 파일이 일치하는지 검사합니다. 실패하면 터미널에 원인과 해결 명령이 출력되니 그대로 따라 하면 됩니다. `--no-verify`로 우회하지 않습니다.
+    6. pre-commit hook을 추가할 때는 스크립트를 `hooks/`에 만들고 `.pre-commit-config.yaml`에 등록합니다.
 
 # 미션 소개
 
