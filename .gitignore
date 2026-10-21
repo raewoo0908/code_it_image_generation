@@ -8,5 +8,5 @@ __pycache__/
 # OS
 .DS_Store
 
-# Data
+# raw Data: 용량이 큰 raw 이미지 데이터는 버전관리하지 않는다.
 data/raw/
